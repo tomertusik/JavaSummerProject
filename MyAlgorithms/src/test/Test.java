@@ -18,7 +18,6 @@ public class Test {
 		System.out.println("Press any key to continue..."); // pause the program
 		in = new Scanner(System.in);
 		String s = in.nextLine();
-		System.out.println(s);
 	}
 
 }
