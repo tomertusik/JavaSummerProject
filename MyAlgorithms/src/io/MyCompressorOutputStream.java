@@ -2,26 +2,28 @@ package io;
 
 import java.io.IOException;
 import java.io.OutputStream;
-
+/**
+ * Compressor which compress the maze bytes array
+ * @author Tomer, Gilad
+ */
 public class MyCompressorOutputStream extends OutputStream {
 	
 	private OutputStream out;
+	private byte[] bytes;
 	
-	public MyCompressorOutputStream() {
+	// constructor
+	public MyCompressorOutputStream(OutputStream out, byte[] bytes) {
+		this.out = out;
+		this.bytes = bytes;
 	}
 
 	@Override
-	public void write(int arg0) throws IOException {
-		// TODO Auto-generated method stub
-
+	public void write(int b) throws IOException {
+		out.write(b);
 	}
-
-	public OutputStream getOut() {
-		return out;
-	}
-
-	public void setOut(OutputStream out) {
-		this.out = out;
+	
+	public void write(byte[] b) throws IOException{
+		
 	}
 
 }

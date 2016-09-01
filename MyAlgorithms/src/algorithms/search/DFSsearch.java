@@ -35,13 +35,14 @@ public class DFSsearch<T> extends CommonSearcher<T> {
 	 */
 	private void DFS(State<T> currState, Searchable s){ 
 		while(!statesList.isEmpty()){
+			
+		evaluatedNodes++; // add a node when going to a new state
 		ArrayList<State<T>> moves = s.getAllPossibleStates(currState); // get the possible moves
 		moves.remove(currState.getCameFrom()); // removes the states we have already been at
 		moves.removeAll(statesMade);
 	
 		if (moves.size() > 0){ // if we got a direction to go to
 			int randomNum = rand.nextInt(moves.size()); // random direction
-			evaluatedNodes++; // add a node when going to a new state
 			State<T> nextState = moves.get(randomNum); // the next state
 			nextState.setCameFrom(currState); // set who it came from
 			statesList.add(nextState); // add it to the list

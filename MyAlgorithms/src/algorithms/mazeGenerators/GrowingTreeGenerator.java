@@ -29,40 +29,7 @@ public class GrowingTreeGenerator extends Maze3DGeneratorBase {
 		positionsMade.add(startPos);  // add start position
 		maze.setFree(startPos);
 		strategy.generate(this, startPos);             // generate the maze with a specific strategy
-		int rNum; 
-		Position ChoosenPos;
-		do{                                    
-		rNum = rand.nextInt(allPositionsMade.size()-1);
-		ChoosenPos = allPositionsMade.get(rNum); // choose a random position from the positions made
-		}while(ChoosenPos.equals(startPos));
-		rNum = rand.nextInt(6); // choose a direction to go to
-		while(ChoosenPos.x !=0 && ChoosenPos.y != 0 && ChoosenPos.z != 0 && ChoosenPos.x !=maze.getCols()-1 && ChoosenPos.y != maze.getRows()-1 && ChoosenPos.z !=maze.getFloors()-1 ){
-			switch (rNum) {
-			case 0: // up
-				ChoosenPos.z++;
-				break;
-			case 1: // down
-				ChoosenPos.z--;
-				break;
-			case 2: // right
-				ChoosenPos.x++;
-				break;
-			case 3: // left
-				ChoosenPos.x--;
-				break;
-			case 4: // backward
-				ChoosenPos.y++;
-				break;
-			case 5: // forward
-				ChoosenPos.y--;
-				break;
-
-			default:
-				break;
-			}
-			maze.setFree(ChoosenPos);
-		}
-		maze.setGoalPosition(ChoosenPos);
+		createPathToGoal(maze, allPositionsMade);
 		return maze;
 	}
 	
