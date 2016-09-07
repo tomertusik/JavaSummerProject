@@ -3,27 +3,55 @@ package io;
 import java.io.IOException;
 import java.io.OutputStream;
 /**
- * Compressor which compress the maze bytes array
+ * Compressor which compress byte array into file
  * @author Tomer, Gilad
  */
 public class MyCompressorOutputStream extends OutputStream {
 	
-	private OutputStream out;
-	private byte[] bytes;
+private OutputStream out;
 	
-	// constructor
-	public MyCompressorOutputStream(OutputStream out, byte[] bytes) {
+	public MyCompressorOutputStream(OutputStream out) {
+		super();
 		this.out = out;
-		this.bytes = bytes;
 	}
-
+	
 	@Override
-	public void write(int b) throws IOException {
+	public void write(int b) throws IOException{
 		out.write(b);
 	}
 	
-	public void write(byte[] b) throws IOException{
+	@Override
+	public void write(byte[] arr) throws IOException {
+		byte currByte = arr[0];
+		int count = 1;
 		
+		for(int i = 1; i<arr.length;i++){
+			if(arr[i] != currByte || count == 255){
+				write(count);
+				write(currByte);
+				currByte = arr[i];
+				count = 1;
+			}
+			else
+				count++;
+		}
+		write(count);
+		write(currByte);
+	}
+	
+	/**
+	 * Writes an integer bigger than 255
+	 * @param b
+	 * @throws IOException
+	 */
+	public void writeSize(int b) throws IOException {
+		while(b > 255){
+			out.write(255);
+			b-=255;
+		}
+		out.write(b);
+	}
 	}
 
-}
+
+

@@ -5,8 +5,8 @@ import java.util.Scanner;
 import algorithms.demo.Demo;
 import algorithms.mazeGenerators.SimpleMaze3DGenerator;
 
-public class Test {
-
+ public class Test {
+	 
 	private static Scanner in;
 
 	public static void main(String[] args) {
@@ -18,5 +18,7 @@ public class Test {
 		in = new Scanner(System.in);
 		String s = in.nextLine();
 	}
+ }
 
-}
+
+

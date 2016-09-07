@@ -6,9 +6,9 @@ import java.util.PriorityQueue;
 
 /*
  * 1. BFS is an algorithm that will find the shortest path from the start position to the end position because it updates the list
- * if the algorithm finds a shorter path from the old one.
- * DFS is an algorithm that try one route until it reaches a dead end, however it does not repeat it's own steps so it would take
- * less moves to reach he goal state, it returns to the last possible cross-roads.
+ * if the algorithm finds a shorter path from the old one, however it developes alot of directions in he same time so it evaluate alot of nodes
+ * DFS is an algorithm that try one route until it reaches a dead end,then it returns to the last possible cross-roads.  it would usually take
+ * less nodes to reach the goal state.
  * 
  * 2. we have chosen Generics to create BFS because that way we do not need to perform casting to position every time, and if tomorrow 
  * we would like to add a new game we could easily make it search-able with an adapter

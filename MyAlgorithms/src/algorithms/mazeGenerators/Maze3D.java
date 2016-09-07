@@ -1,6 +1,7 @@
 package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 3D maze 
@@ -32,7 +33,43 @@ public class Maze3D {
 		maze = new int[floors][rows][cols];
 		
 	}
-
+	
+	/**
+	 * Constructor to create a new maze from a byte array
+	 * @param arr
+	 */
+	public Maze3D(byte[] arr){
+		int index = 9;
+		int z = arr[0];
+		int y = arr[1];
+		int x = arr[2];
+		Position startPos = new Position(z,y,x);
+		setStartPosition(startPos);
+		
+		z = arr[3];
+		y = arr[4];
+		x = arr[5];
+		Position goalPos = new Position(z,y,x);
+		setGoalPosition(goalPos);
+		
+		this.floors = arr[6];
+		this.rows = arr[7];
+		this.cols = arr[8];
+		
+		maze = new int[floors][rows][cols];
+		
+		for(z=0; z<floors;z++){
+			for(y=0;y<rows;y++){
+				for(x=0;x<cols;x++){
+					maze[z][y][x] = arr[index];
+					index++;
+					
+				}
+			}
+		}
+		
+	}
+	
 	/**
 	 * 
 	 * @return Number of floors
@@ -316,7 +353,57 @@ public class Maze3D {
 		return pos;
 		
 	}
+	
+	/**
+	 * Method to return the maze information as byte array
+	 * @return byte[]
+	 */
+	public byte[] toByteArray(){
+		ArrayList<Byte> list = new ArrayList<Byte>();
+		list.add((byte)startPosition.z); // add start position
+		list.add((byte)startPosition.y);
+		list.add((byte)startPosition.x);
+		list.add((byte)goalPosition.z); // add goal position
+		list.add((byte)goalPosition.y);
+		list.add((byte)goalPosition.x);
+		list.add((byte)floors); // add floors
+		list.add((byte)rows); // add rows
+		list.add((byte)cols); // add columns
+		
+		// add the maze integers to the list
+		for(int z=0; z<floors;z++){
+			for(int y=0;y<rows;y++){
+				for(int x=0;x<cols;x++){
+					list.add((byte)maze[z][y][x]);
+				}
+			}
+		}
+	
+		byte[] bytes = new byte[list.size()];
+		for (int i = 0; i < bytes.length; i++) {
+			bytes[i] = (byte)list.get(i);
+		}
+		return bytes;
+	}
 
-	
-	
+	// equals
+	@Override
+	public boolean equals(Object obj) {
+		Maze3D compareMaze = (Maze3D)obj;
+		if (!this.startPosition.equals(compareMaze.getStartPosition())  || !this.goalPosition.equals(compareMaze.getGoalPosition()))
+			return false;
+		
+		if(this.floors != compareMaze.getFloors() || this.rows != compareMaze.getRows() || compareMaze.cols != this.cols)
+			return false;
+		
+		for(int z=0; z<floors;z++){
+			for(int y=0;y<rows;y++){
+				for(int x=0;x<cols;x++){
+					if(this.maze[z][y][x] != compareMaze.maze[z][y][x])
+						return false;
+				}
+			}
+		}	
+		return true;
+	}
 }
