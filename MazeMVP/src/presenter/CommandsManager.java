@@ -41,6 +41,7 @@ public class CommandsManager {
 		commands.put("maze_saved", new MazeSavedCommand());
 		commands.put("maze_loaded", new MazeLoadedCommand());
 		commands.put("solution_ready", new SolutionReadyCommand());
+		commands.put("solution_exist", new SolutionExistCommand());
 		commands.put("display", new DisplayMazeCommand());
 		commands.put("display_cross_section", new DisplayCrossSection());
 		commands.put("save_maze", new SaveMaze());
@@ -240,7 +241,7 @@ public class CommandsManager {
 		public void doCommand(String[] args) throws Exception {
 			String name = args[0];
 			Solution<Position> _currentSolution= model.getSolutionsByName(name);
-			if(_currentSolution==null){
+			if(_currentSolution == null){
 				throw new  Exception("Invalid solution name or maze not solved yet");
 			}
 			view.displaySolution(_currentSolution);
@@ -336,6 +337,22 @@ public class CommandsManager {
 		public void doCommand(String[] args) {
 			String name = args[0];
 			String msg = "solution for maze " + name + " is ready";
+		view.displayMessage(msg);
+		}
+		
+	}
+	
+	/**
+	 * Notify the user on screen that the maze requested is solved already
+	 * @author Tomer, Gilad
+	 *
+	 */
+	class SolutionExistCommand implements Command {
+
+		@Override
+		public void doCommand(String[] args) {
+			String name = args[0];
+			String msg = "solution for maze " + name + " already exist";
 		view.displayMessage(msg);
 		}
 		

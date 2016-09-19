@@ -53,8 +53,9 @@ public interface Model {
 	 * Get the solution of a maze by the maze name
 	 * @param name
 	 * @return Solution<Position>
+	 * @throws Exception 
 	 */
-	Solution<Position> getSolutionsByName(String name);
+	Solution<Position> getSolutionsByName(String name) throws Exception;
 	/**
 	 * Exit the program safely and close all threads
 	 */

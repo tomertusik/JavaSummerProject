@@ -3,7 +3,10 @@ package model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.Observable;
@@ -11,6 +14,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import algorithms.mazeGenerators.GrowingTreeGenerator;
 import algorithms.mazeGenerators.Maze3D;
@@ -32,13 +37,14 @@ public class MyModel extends Observable implements Model {
 	
 	private ExecutorService executor;	
 	private Map<String, Maze3D> mazes = new ConcurrentHashMap<String, Maze3D>();
-	private Map<String, Solution<Position>> solutions = new ConcurrentHashMap<String, Solution<Position>>();
+	private Map<Maze3D, Solution<Position>> solutions = new ConcurrentHashMap<Maze3D, Solution<Position>>();
 	
 	/**
 	 * CTOR
 	 */
 	public MyModel() {
 		executor = Executors.newFixedThreadPool(50);
+		loadSolutions();
 	}	
 
 	@Override
@@ -113,6 +119,11 @@ public class MyModel extends Observable implements Model {
 
 	@Override
 	public void SolveMaze(String name, Maze3D maze, String algorithm) {
+		if(getSolutionsByName(name) != null){
+			setChanged();
+		    notifyObservers("solution_exist " + name);
+		}
+		else{
 		executor.submit(new Callable<Solution<Position>>() {
 
 			@Override
@@ -129,7 +140,7 @@ public class MyModel extends Observable implements Model {
 				}
 				
 				sol = searchy.Search(sa); // run the search method to get a solution
-				solutions.put(name, sol);
+				solutions.put(maze, sol);
 				
 				setChanged();
 				notifyObservers("solution_ready " + name);
@@ -137,23 +148,79 @@ public class MyModel extends Observable implements Model {
 				return sol;
 			}
 		});
+		}
 	}
 
 	public  Solution<Position> getSolutionsByName(String soultionName) {
-		 return solutions.get(soultionName);
+		Maze3D maze = mazes.get(soultionName);
+		if(maze == null){
+			return null;
+		}
+		for(Maze3D maze1 : solutions.keySet()){
+			if(maze1.equals(maze))
+				return solutions.get(maze1);
+		}
+		return null;
 	}
 
 
 	@Override
 	public void exit() {
+		saveSolutions();
 		executor.shutdownNow();
 	}
-
 
 	@Override
 	public File[] getFilesList(String path) {
 		return (new File(path).listFiles());
 	}
+	
+	/**
+	 * Save the solutions list into gzip file
+	 */
+	private void saveSolutions() {
+		ObjectOutputStream out=null;
+		try {
+			out = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("Solutions.dat")));
+			out.writeObject(solutions);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
+	}
+
+	
+	/**
+	 * Load the solutions list from gzip file
+	 */
+	private void loadSolutions() {
+		File file = new File("Solutions.dat");
+		if (!file.exists())
+			return;
+		
+		ObjectInputStream ois = null;
+		
+		try {
+			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("Solutions.dat")));
+			solutions = (Map<Maze3D, Solution<Position>>) ois.readObject();		
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				ois.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}		
+	}
+	
 
 }
