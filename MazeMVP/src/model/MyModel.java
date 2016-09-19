@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -19,8 +20,11 @@ import java.util.zip.GZIPOutputStream;
 
 import algorithms.mazeGenerators.GrowingTreeGenerator;
 import algorithms.mazeGenerators.Maze3D;
+import algorithms.mazeGenerators.Maze3DGenerator;
 import algorithms.mazeGenerators.Position;
+import algorithms.mazeGenerators.SimpleMaze3DGenerator;
 import algorithms.mazeGenerators.StrategyDFS;
+import algorithms.mazeGenerators.StrategyRDC;
 import algorithms.search.BFSsearch;
 import algorithms.search.DFSsearch;
 import algorithms.search.SearchAdapter;
@@ -28,6 +32,7 @@ import algorithms.search.Searcher;
 import algorithms.search.Solution;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
+import presenter.PropertiesLoader;
 /**
  * Model fo the 3D maze game
  * @author Tomer, Gilad
@@ -38,12 +43,14 @@ public class MyModel extends Observable implements Model {
 	private ExecutorService executor;	
 	private Map<String, Maze3D> mazes = new ConcurrentHashMap<String, Maze3D>();
 	private Map<Maze3D, Solution<Position>> solutions = new ConcurrentHashMap<Maze3D, Solution<Position>>();
+	private presenter.Properties properties;
 	
 	/**
 	 * CTOR
 	 */
 	public MyModel() {
-		executor = Executors.newFixedThreadPool(50);
+		properties = PropertiesLoader.getInstance().getProperties();
+		executor = Executors.newFixedThreadPool(properties.getNumOfThreads());
 		loadSolutions();
 	}	
 
@@ -53,10 +60,21 @@ public class MyModel extends Observable implements Model {
 
 			@Override
 			public Maze3D call() throws Exception {
-				GrowingTreeGenerator generator = new GrowingTreeGenerator(new StrategyDFS());
-				Maze3D maze = generator.generate(floors,rows, cols);
-				mazes.put(name, maze);
+				Maze3D maze = null;
+				Maze3DGenerator generator = null ;
 				
+				if(properties.getGenerateMazeAlgorithm().equals("DFS")){
+					 generator = new GrowingTreeGenerator(new StrategyDFS());
+				}
+				else if(properties.getGenerateMazeAlgorithm().equals("RDC")){
+					 generator = new GrowingTreeGenerator(new StrategyRDC());
+				}
+				else if(properties.getGenerateMazeAlgorithm().equals("SimpleMaze")){
+					 generator = new SimpleMaze3DGenerator();
+				}
+				
+				maze = generator.generate(floors,rows, cols);
+				mazes.put(name, maze);
 				setChanged();
 				notifyObservers("maze_ready " + name);		
 				return maze;
@@ -77,7 +95,8 @@ public class MyModel extends Observable implements Model {
 		try {
 			out = new MyCompressorOutputStream(new FileOutputStream(fileName));
 			((MyCompressorOutputStream) out).writeSize(name.getBytes().length);
-			out.write(name.getBytes());
+			byte b[] = name.getBytes();
+			out.write(b);
 			((MyCompressorOutputStream) out).writeSize(maze.toByteArray().length);
 			out.write(maze.toByteArray());
 			out.flush();
@@ -90,13 +109,23 @@ public class MyModel extends Observable implements Model {
 	}
 
 
+	@SuppressWarnings("resource")
 	@Override
 	public void LoadMaze(String fileName, String name) throws Exception {
 		InputStream in;
 			in = new MyDecompressorInputStream(new FileInputStream(fileName));
 			int nameSize=((MyDecompressorInputStream) in).readSize();
+			if( nameSize != name.getBytes().length) {
+				throw new Exception("Maze name does no exist in file");
+			}
 			byte nameArr[] = new byte[nameSize];
 			in.read(nameArr);
+			byte b1[] = name.getBytes();
+			for(int i = 0;i<nameSize;i++){
+				if( nameArr[i] != b1[i]) {
+					throw new Exception("Maze name does no exist in file");
+				}
+			}
 			int size = ((MyDecompressorInputStream) in).readSize();
 			byte b[]=new byte[size];
 			in.read(b);
