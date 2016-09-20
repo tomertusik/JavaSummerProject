@@ -44,7 +44,7 @@ public class Presenter implements Observer {
 						commandLine.indexOf(" ") + 1);
 				args = commandArgs.split(" ");							
 			}
-			else if(arr.length == 1 && !arr[0].equals("exit")){
+			else if(arr.length == 1 && !arr[0].equals("exit") && !arr[0].equals("display_properties")){
 				throw new Exception("Invalid command parameters");
 			}
 			Command cmd = commands.get(command);

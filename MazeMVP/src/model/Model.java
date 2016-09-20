@@ -1,10 +1,12 @@
 package model;
 
 import java.io.File;
+import java.io.IOException;
 
 import algorithms.mazeGenerators.Maze3D;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import presenter.Properties;
 
 /**
  * Interface for model types
@@ -46,9 +48,8 @@ public interface Model {
 	 * Solve an existing maze and save the solution
 	 * @param name
 	 * @param maze
-	 * @param algorithm
 	 */
-	void SolveMaze(String name, Maze3D maze, String algorithm);
+	void SolveMaze(String name, Maze3D maze);
 	/**
 	 * Get the solution of a maze by the maze name
 	 * @param name
@@ -67,4 +68,19 @@ public interface Model {
 	 * @return
 	 */
 	public File[] getFilesList(String path);
+	
+	/**
+	 * Change the properties of the program
+	 * @param name
+	 * @param value
+	 * @throws IOException
+	 */
+	void changeProperties(String name, String value) throws IOException;
+	
+	
+	/**
+	 * Get the properties list
+	 * @return
+	 */
+	public Properties getProperties();
 }

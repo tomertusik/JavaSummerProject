@@ -13,26 +13,56 @@ public class Properties implements Serializable {
 	private String generateMazeAlgorithm;
 	private String solveMazeAlgorithm;
 	
-public Properties() {
-		
-		
+	/**
+	 * CTOR
+	 */
+    public Properties() {
 	}
 			
+    /**
+     * Get the number of threads in the thread pool
+     * @return
+     */
 	public int getNumOfThreads() {
 		return numOfThreads;
 	}
+	
+	/**
+	 * Set the number of threads in the thread pool
+	 * @param numOfThreads
+	 */
 	public void setNumOfThreads(int numOfThreads) {
 		this.numOfThreads = numOfThreads;
 	}
+	
+	/**
+	 * Get the generate maze algorithm which is used to create mazes
+	 * @return
+	 */
 	public String getGenerateMazeAlgorithm() {
 		return generateMazeAlgorithm;
 	}
+	
+	/**
+	 * Set the generate maze algorithm which is used to create mazes
+	 * @param generateMazeAlgorithm
+	 */
 	public void setGenerateMazeAlgorithm(String generateMazeAlgorithm) {
 		this.generateMazeAlgorithm = generateMazeAlgorithm;
 	}
+	
+	/**
+	 * Get the solve maze algorithm which is used to solve mazes
+	 * @return
+	 */
 	public String getSolveMazeAlgorithm() {
 		return solveMazeAlgorithm;
 	}
+	
+	/**
+	 * Set the solve maze algorithm which is used to solve mazes
+	 * @return
+	 */
 	public void setSolveMazeAlgorithm(String solveMazeAlgorithm) {
 		this.solveMazeAlgorithm = solveMazeAlgorithm;
 	}

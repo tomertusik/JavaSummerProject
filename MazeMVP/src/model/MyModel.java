@@ -1,7 +1,9 @@
 package model;
 
+import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -147,10 +149,12 @@ public class MyModel extends Observable implements Model {
 
 
 	@Override
-	public void SolveMaze(String name, Maze3D maze, String algorithm) {
+	public void SolveMaze(String name, Maze3D maze) {
 		if(getSolutionsByName(name) != null){
 			setChanged();
 		    notifyObservers("solution_exist " + name);
+		    setChanged();
+			notifyObservers("solution_ready " + name);
 		}
 		else{
 		executor.submit(new Callable<Solution<Position>>() {
@@ -161,10 +165,10 @@ public class MyModel extends Observable implements Model {
 				Solution<Position> sol=null;
 				Searcher<Position> searchy = null;
 				
-				if(algorithm.equals("BFS")){
+				if(properties.getSolveMazeAlgorithm().equals("BFS")){
 					 searchy = new BFSsearch<Position>(); // create BFS searcher
 				}
-				else if(algorithm.equals("DFS")){
+				else if(properties.getSolveMazeAlgorithm().equals("DFS")){
 					 searchy = new DFSsearch<Position>();// create DFS searcher
 				}
 				
@@ -196,7 +200,23 @@ public class MyModel extends Observable implements Model {
 	@Override
 	public void exit() {
 		saveSolutions();
+		saveProperties();
 		executor.shutdownNow();
+	}
+
+	/**
+	 * Saves the properties to xml file
+	 */
+	private void saveProperties() {
+		try {
+			XMLEncoder encoder = new XMLEncoder(new FileOutputStream("properties.xml"));
+			encoder.writeObject(properties);
+			encoder.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		
 	}
 
 	@Override
@@ -250,6 +270,35 @@ public class MyModel extends Observable implements Model {
 			}
 		}		
 	}
+
+	@Override
+	public void changeProperties(String name, String value) throws IOException {
+		if(name.equals("ChangeGenerate")){
+			if(value.equals("DFS") || value.equals("RDC")|| value.equals("SimpleMaze")){
+				properties.setGenerateMazeAlgorithm(value);
+			}else{
+				throw new IOException("Invalid Algorithm Name");
+			}	
+			
+		}else if(name.equals("ChangeSolve")){
+			if(value.equals("BFS") || value.equals("DFS")){
+				properties.setSolveMazeAlgorithm(value);
+			}else{
+				throw new IOException("Invalid Algorithm Name");
+			}	
+		}else{
+			throw new IOException("Invalid Parameter name");
+		}
+		
+		setChanged();
+		notifyObservers("change_properties_notify_command " + name);
+	}
+
+	public presenter.Properties getProperties() {
+		return properties;
+	}
+	
+	
 	
 
 }

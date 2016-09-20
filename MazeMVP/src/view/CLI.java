@@ -51,9 +51,12 @@ public class CLI extends Observable {
 				out.println("4.display_cross_section - tap the command <name> <axis(X/Y/Z)> <index> -> example: display_cross_section Mazey X 5");
 				out.println("5.save_maze- tap the command <name> <file name> -> example: save_maze Mazey test");
 				out.println("6.load_maze- tap the command <file name> <name> -> example: load_maze test Mazey");
-				out.println("7.solve - tap the command solve <name> <algorithm(DFS/ BFS)> -> example: solve Mazey DFS");
+				out.println("7.solve - tap the command solve <name> -> example: solve Mazey");
 				out.println("8.display_solution - tap the command <name> -> example: display_solution Mazey ");
 				out.println("9.dir - tap the command <path> -> example: dir D:/JavaProjects/MazeMVC/src/view");
+				out.println("10.change_properties - tap the command change_properties <name> <value> -> for name: (ChangeGenerate) value: (RDC / DFS / SimpleMaze)");
+				out.println("for name:(ChangeSolve) value: (DFS / BFS) -> example: change_properties ChangeSolve DFS");
+				out.println("11.tap display_properties in order to see the default settings");
 			
 				while (true) {
 					

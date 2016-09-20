@@ -1,6 +1,7 @@
 package presenter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3D;
@@ -50,6 +51,11 @@ public class CommandsManager {
 		commands.put("display_solution", new DisplaySolution());
 		commands.put("exit", new Exit());
 		commands.put("dir", new Dir());
+		commands.put("change_properties", new ChangePropertiesCommand());
+		commands.put("change_properties_notify_command", new ChangePropertiesNotifyCommand());
+		commands.put("display_properties", new DisplayPropertiesCommand());
+		
+		
 		return commands;
 	}
 	
@@ -209,7 +215,7 @@ public class CommandsManager {
 
 		@Override
 		public void doCommand(String[] args) throws Exception {
-			if(args.length!=2){
+			if(args.length!=1){
 				throw new  Exception("Invalid name or algorithm");
 			}
 			String name = args[0];
@@ -217,11 +223,8 @@ public class CommandsManager {
 			if(maze==null){
 				throw new  Exception("Invalid maze name");
 			}
-			String algorithm = args[1];
-			if(!algorithm.equals("DFS") && !algorithm.equals("BFS"))
-				throw new  Exception("Invalid algorithm");
 			try {
-				model.SolveMaze(name,maze,algorithm);
+				model.SolveMaze(name,maze);
 			} catch (Exception e) {
 				throw new  Exception("Error accured,try again");
 			}
@@ -337,7 +340,7 @@ public class CommandsManager {
 		public void doCommand(String[] args) {
 			String name = args[0];
 			String msg = "solution for maze " + name + " is ready";
-		view.displayMessage(msg);
+		    view.displayMessage(msg);
 		}
 		
 	}
@@ -357,4 +360,62 @@ public class CommandsManager {
 		}
 		
 	}
+	
+	/**
+	 * Change the properties of the program
+	 * @author Tomer, Gilad
+	 *
+	 */
+	class ChangePropertiesCommand implements Command {
+
+		@Override
+		public void doCommand(String[] args) throws Exception {
+			if(args.length!=2){
+				throw new  Exception("Invalid property or algorithm");
+			}
+			String name = args[0];
+			String value = args[1];
+			try {
+				model.changeProperties(name,value);
+			} catch (IOException e) {
+				view.displayMessage(e.getMessage());
+			}
+		}
+		
+	}
+	
+	/**
+	 * Notify the user on screen that the properties had been changed
+	 * @author Tomer
+	 *
+	 */
+	class ChangePropertiesNotifyCommand implements Command {
+
+		@Override
+		public void doCommand(String[] args) throws Exception {
+			String name = args[0];
+			String msg = "The properties " + name + " has changed";
+		view.displayMessage(msg);
+		}
+	
+	}
+	
+	/**
+	 * Display the properties on screen
+	 * @author Tomer
+	 *
+	 */
+	class DisplayPropertiesCommand implements Command {
+
+		@Override
+		public void doCommand(String[] args) throws Exception {
+		presenter.Properties p= model.getProperties();
+		String msg="Properties :" ;
+		view.displayMessage(msg);
+		view.displayMessage("Generate Maze Algorithm: "+p.getGenerateMazeAlgorithm());
+		view.displayMessage("Solve Maze Algorithm: "+p.getSolveMazeAlgorithm());
+		}
+	
+	}
+
 }
