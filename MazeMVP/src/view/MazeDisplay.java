@@ -8,9 +8,9 @@ import org.eclipse.swt.widgets.Shell;
 
 public class MazeDisplay extends Canvas {
 	
-	private int[][] mazeData;
+	private int[][][] mazeData;
 	
-	public void setMazeData(int[][] mazeData) {
+	public void setMazeData(int[][][] mazeData) {
 		this.mazeData = mazeData;
 		this.redraw();
 	}
@@ -34,14 +34,16 @@ public class MazeDisplay extends Canvas {
 
 				   int w=width/mazeData[0].length;
 				   int h=height/mazeData.length;
-
-				   for(int i=0;i<mazeData.length;i++)
+				   for (int k = 0; k < mazeData.length; k++) {
+					  for(int i=0;i<mazeData[k].length;i++)
 				      for(int j=0;j<mazeData[i].length;j++){
 				          int x=j*w;
 				          int y=i*h;
-				          if(mazeData[i][j]!=0)
+				          if(mazeData[k][i][j]!=0)
 				              e.gc.fillRectangle(x,y,w,h);
 				      }
+				}
+				 
 
 				
 			}
