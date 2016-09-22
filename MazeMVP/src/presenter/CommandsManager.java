@@ -285,14 +285,14 @@ public class CommandsManager {
 	 * Notify the user on screen that the maze requested is ready
 	 * @author Tomer, Gilad
 	 *
-	 */
+	 */ 
 	class MazeReadyCommand implements Command {
 
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];
 			String msg = "maze " + name + " is ready";
-		view.displayMessage(msg);
+		    view.displayMessage(msg);
 		}
 		
 	}

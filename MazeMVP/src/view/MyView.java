@@ -33,6 +33,7 @@ public class MyView extends Observable implements View, Observer {
 		cli.addObserver(this);
 	}
 	
+	@Override
 	public void start(){
 		try {
 			cli.start();
