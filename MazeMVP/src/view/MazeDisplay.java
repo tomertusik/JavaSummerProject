@@ -10,6 +10,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import algorithms.mazeGenerators.Maze3D;
 import algorithms.mazeGenerators.Position;
@@ -17,23 +18,30 @@ import algorithms.search.Solution;
 import algorithms.search.State;
 
 public class MazeDisplay extends Canvas {
-
+	
+	MazeWindow view;
 	Maze3D maze;
 	int [][][] myMaze;
 	Character character;
 	int [][] mazeData;
 	int currentZ;
+	
 
 	public void setMazeData(int[][] mazeData) {
 		this.mazeData = mazeData;
 	}
 
-	public MazeDisplay(Shell parent, int style, Maze3D maze) {
+	public MazeDisplay(Shell parent, int style, Maze3D maze,MazeWindow view) {
 		super(parent, style);
+		this.view = view;
+		if(maze!=null){
 		myMaze=maze.getMaze();
 		character = new Character();
 		character.setPos(maze.getStartPosition());
-		currentZ=character.getPos().z;			
+		currentZ=character.getPos().z;	
+		}
+		this.maze=maze;
+		
 		this.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -80,6 +88,8 @@ public class MazeDisplay extends Canvas {
 					
 				redraw();	
 				}
+				if (character.getPos().equals(maze.getGoalPosition()))
+					view.displayMessage("Congratulations you solved the maze !");
 			}
 		});
 
@@ -87,8 +97,12 @@ public class MazeDisplay extends Canvas {
 
 			@Override
 			public void paintControl(PaintEvent e) {
-				if (mazeData == null)
-					return;
+				if (mazeData == null){
+						Image imgBack = new Image(null, "images/avengerscover.jpeg");
+						e.gc.drawImage(imgBack, 0, 0, imgBack.getBounds().width, imgBack.getBounds().height, 0, 0,
+								getSize().x, getSize().y);
+						return;
+									}
 				
 				   e.gc.setForeground(new Color(null,0,0,0));
 				   e.gc.setBackground(new Color(null,0,0,0));
@@ -99,46 +113,40 @@ public class MazeDisplay extends Canvas {
 				   int w=width/mazeData[0].length;
 				   int h=height/mazeData.length;
 				   
-				   Image _bananaImg=new Image(null, "images/banana.png");
+				   Image _wallImg = new Image(null, "images/wall.jpg");
+				   Image _bananaImg=new Image(null, "images/goal.png");
 				   Image _twowayImg=new Image(null, "images/twoway.png");
 				   Image _downImg=new Image(null, "images/down.png");
-				   Image _upImg=new Image(null, "images/up.jpg");
+				   Image _upImg=new Image(null, "images/up.png");
 				   
 				   for(int i=0;i<mazeData.length;i++)
 				      for(int j=0;j<mazeData[i].length;j++){
 				          int x=j*w;
 				          int y=i*h;
 				          if(mazeData[i][j]==1){
-				              e.gc.fillRectangle(x,y,w,h);
+				        	  e.gc.drawImage(_wallImg, 0, 0, _wallImg.getBounds().width, _wallImg.getBounds().height, 
+					    				w * j, h * i, w, h);
 				          }
 				          else if( maze.getGoalPosition().y==i  &&
 				        		  maze.getGoalPosition().x==j  &&
 				        		  maze.getGoalPosition().z== character.getPos().z){
 				        	  
-				        	//  _bananaImg=new Image(null, "images/banana.png"); 
 				      		e.gc.drawImage(_bananaImg, 0, 0, _bananaImg.getBounds().width, _bananaImg.getBounds().height, 
 				    				w * j, h * i, w, h);
 
 				          } 
 				          else if (myMaze[character.getPos().z-1][i][j]==0 && myMaze[character.getPos().z+1][i][j]==0){
-				        	 //  img=new Image(null, "images/twoway.png"); 
 
 					      		e.gc.drawImage(_twowayImg, 0, 0, _twowayImg.getBounds().width, _twowayImg.getBounds().height, 
 					    				w * j, h * i, w, h);
 					      		
 				          } else if (myMaze[character.getPos().z-1][i][j]==0){
 
-				        	  // img=new Image(null, "images/down.png"); 
 
 					      		e.gc.drawImage(_downImg, 0, 0, _downImg.getBounds().width, _downImg.getBounds().height, 
 					    				w * j, h * i, w, h);
 				          }else if(myMaze[character.getPos().z+1][i][j]==0){
-				        	  e.gc.setForeground(new Color(null,45,76,25));
-				        	  e.gc.setBackground(new Color(null,45,76,25));
-				        	  e.gc.fillRectangle(x,y,w,h);
 				        	  
-//				        	  img=new Image(null, "images/up.jpg"); 
-
 					      		e.gc.drawImage(_upImg, 0, 0, _upImg.getBounds().width, _upImg.getBounds().height, 
 					    				w * j, h * i, w, h);				        	
 				          }
@@ -148,6 +156,11 @@ public class MazeDisplay extends Canvas {
 				  character.draw(w, h, e.gc);
 			}
 		});
+		
+
+		this.redraw();
+		this.update();
+		this.setVisible(true);
 	}
 	
 
@@ -163,7 +176,6 @@ public void printSolution(Solution<Position> solution) {
 
 					@Override
 					public void run() {
-						Position newPos =solution.getStatesList().get(0).getValue();
 						if (i == solution.getStatesList().size()) {
 							cancel();
 							return;
@@ -177,13 +189,33 @@ public void printSolution(Solution<Position> solution) {
 						character.setPos(solution.getStatesList().get(i++).getValue());
 						setMazeData(myMaze[character.getPos().z]);
 						redraw();
-					}
+						if (character.getPos().equals(maze.getGoalPosition())){
+								
+							displayMessage("Congratulations the maze got solved for you!");
+							}
+						}
 				});
 
 			}
 		};
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(task, 0, 500);
+	}
 
-	}}
+
+public void displayMessage(String msg) {
+	view.display.syncExec(new Runnable() {
+		
+		@Override
+		public void run() {
+			MessageBox message = new MessageBox(view.shell);
+			if(msg!=null){
+			message.setMessage(msg);
+			message.open();	
+			}
+				
+		}
+	});			
+}}
+
 

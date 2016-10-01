@@ -50,4 +50,22 @@ public interface View {
 	 * Exit the program and print thank you to the user
 	 */
 	public void exit();
+
+	/**
+	 * Notify maze is ready
+	 * @param name
+	 */
+	public void mazeReady(String name);
+
+	/**
+	 * Notify solve is ready
+	 * @param name
+	 */
+	public void solutionReady(String name);
+
+	/**
+	 * Notify solution exists
+	 * @param name
+	 */
+	public void solutionExist(String name);
 }

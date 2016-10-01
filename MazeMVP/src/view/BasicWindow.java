@@ -2,6 +2,7 @@ package view;
 
 import java.util.Observable;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 

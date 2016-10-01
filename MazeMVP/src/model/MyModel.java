@@ -57,7 +57,11 @@ public class MyModel extends Observable implements Model {
 	}	
 
 	@Override
-	public void generateMaze(String name,int floors, int rows, int cols) {
+	public void generateMaze(String name,int floors, int rows, int cols) throws Exception {
+		
+		if(mazes.containsKey(name))
+			throw new Exception("The maze name is already taken!");
+		
 		executor.submit(new Callable<Maze3D>() {
 
 			@Override
@@ -150,13 +154,13 @@ public class MyModel extends Observable implements Model {
 
 	@Override
 	public void SolveMaze(String name, Maze3D maze) {
-		if(getSolutionsByName(name) != null){
-			setChanged();
-		    notifyObservers("solution_exist " + name);
-		    setChanged();
-			notifyObservers("solution_ready " + name);
-		}
-		else{
+//		if(getSolutionsByName(name) != null){
+////			setChanged();
+////		    notifyObservers("solution_exist " + name);
+//		    setChanged();
+//			notifyObservers("solution_ready " + name);
+//		}
+//		else{
 		executor.submit(new Callable<Solution<Position>>() {
 
 			@Override
@@ -182,7 +186,7 @@ public class MyModel extends Observable implements Model {
 			}
 		});
 		}
-	}
+//	}
 
 	public  Solution<Position> getSolutionsByName(String soultionName) {
 		Maze3D maze = mazes.get(soultionName);
@@ -286,7 +290,13 @@ public class MyModel extends Observable implements Model {
 			}else{
 				throw new IOException("Invalid Algorithm Name");
 			}	
-		}else{
+		}
+		else if(name.equals("ChangeView")){
+			if(value.equals("Game") || value.equals("Commands"))
+				properties.setViewType(value);
+			else
+				throw new IOException("Invalid View Type");		}
+		else{
 			throw new IOException("Invalid Parameter name");
 		}
 		

@@ -12,6 +12,7 @@ public class Properties implements Serializable {
 	private int numOfThreads;
 	private String generateMazeAlgorithm;
 	private String solveMazeAlgorithm;
+	private String viewType;
 	
 	/**
 	 * CTOR
@@ -65,6 +66,22 @@ public class Properties implements Serializable {
 	 */
 	public void setSolveMazeAlgorithm(String solveMazeAlgorithm) {
 		this.solveMazeAlgorithm = solveMazeAlgorithm;
+	}
+
+	/**
+	 * Get the view type 
+	 * @return
+	 */
+	public String getViewType() {
+		return viewType;
+	}
+
+	/**
+	 * Set the view type 
+	 * @return
+	 */
+	public void setViewType(String viewType) {
+		this.viewType = viewType;
 	}
 	
 }

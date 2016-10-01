@@ -291,8 +291,7 @@ public class CommandsManager {
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];
-			String msg = "maze " + name + " is ready";
-		    view.displayMessage(msg);
+		    view.mazeReady(name);
 		}
 		
 	}
@@ -339,8 +338,7 @@ public class CommandsManager {
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];
-			String msg = "solution for maze " + name + " is ready";
-		    view.displayMessage(msg);
+		    view.solutionReady(name);
 		}
 		
 	}
@@ -355,8 +353,7 @@ public class CommandsManager {
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];
-			String msg = "solution for maze " + name + " already exist";
-		view.displayMessage(msg);
+		    view.solutionExist(name);
 		}
 		
 	}
@@ -395,7 +392,7 @@ public class CommandsManager {
 		public void doCommand(String[] args) throws Exception {
 			String name = args[0];
 			String msg = "The properties " + name + " has changed";
-		view.displayMessage(msg);
+		    view.displayMessage(msg);
 		}
 	
 	}

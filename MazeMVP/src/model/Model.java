@@ -20,8 +20,9 @@ public interface Model {
 	 * @param floors
 	 * @param rows
 	 * @param cols
+	 * @throws Exception 
 	 */
-	void generateMaze(String name,int floors, int rows, int cols);
+	void generateMaze(String name,int floors, int rows, int cols) throws Exception;
 	/**
 	 * Get an existing maze by name
 	 * @param name

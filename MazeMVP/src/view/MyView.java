@@ -91,6 +91,26 @@ public class MyView extends Observable implements View, Observer {
 	@Override
 	public void exit() {
 		displayMessage("Thank you for using our program ! ");
+	}
+
+	@Override
+	public void mazeReady(String name) {
+		String msg = "maze " + name + " is ready";
+		displayMessage(msg);
+	}
+
+	@Override
+	public void solutionReady(String name) {
+		String msg = "solution for maze " + name + " is ready";
+		displayMessage(msg);
+	}
+
+	@Override
+	public void solutionExist(String name) {
+		String msg = "solution for maze " + name + " already exist";
+		displayMessage(msg);
+	    setChanged();
+		notifyObservers("solution_ready " + name);
 	}		
 	}
 

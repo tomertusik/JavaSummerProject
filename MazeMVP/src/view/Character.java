@@ -11,7 +11,7 @@ public class Character {
 	private Image img;
 	
 	public Character() {
-		img = new Image(null, "images/character.jpg");
+		img = new Image(null, "images/ironman.png");
 	}
 
 	public Position getPos() {
