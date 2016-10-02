@@ -20,7 +20,7 @@ public class Run {
 	public static void main(String[] args) {
 		
 		View view= null;
-		
+				
 		Model model = new MyModel();
 		
 		if(model.getProperties().getViewType().equals("Game")){

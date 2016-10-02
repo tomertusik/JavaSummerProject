@@ -17,6 +17,12 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import algorithms.search.State;
 
+
+/**
+ * Draw and display the maze on the game board
+ * @author Tomer
+ *
+ */
 public class MazeDisplay extends Canvas {
 	
 	MazeWindow view;
@@ -25,21 +31,33 @@ public class MazeDisplay extends Canvas {
 	Character character;
 	int [][] mazeData;
 	int currentZ;
+	int clueLastZ;
 	
-
+/**
+ * Set the maze data (2 dimension)
+ * @param mazeData
+ */
 	public void setMazeData(int[][] mazeData) {
 		this.mazeData = mazeData;
 	}
 
-	public MazeDisplay(Shell parent, int style, Maze3D maze,MazeWindow view) {
+	/**
+	 * CTOR
+	 * @param parent
+	 * @param style
+	 * @param maze
+	 * @param view
+	 */
+	public MazeDisplay(Shell parent, int style, Maze3D maze,MazeWindow view,Image img) {
 		super(parent, style);
 		this.view = view;
 		if(maze!=null){
 		myMaze=maze.getMaze();
-		character = new Character();
+		character = new Character(img);
 		character.setPos(maze.getStartPosition());
 		currentZ=character.getPos().z;	
 		}
+		
 		this.maze=maze;
 		
 		this.addKeyListener(new KeyListener() {
@@ -88,8 +106,9 @@ public class MazeDisplay extends Canvas {
 					
 				redraw();	
 				}
-				if (character.getPos().equals(maze.getGoalPosition()))
+				if (character.getPos().equals(maze.getGoalPosition())){
 					view.displayMessage("Congratulations you solved the maze !");
+				}
 			}
 		});
 
@@ -118,11 +137,10 @@ public class MazeDisplay extends Canvas {
 				   Image _twowayImg=new Image(null, "images/twoway.png");
 				   Image _downImg=new Image(null, "images/down.png");
 				   Image _upImg=new Image(null, "images/up.png");
+				   Image _clueImg=new Image(null, "images/clue.png");
 				   
 				   for(int i=0;i<mazeData.length;i++)
 				      for(int j=0;j<mazeData[i].length;j++){
-				          int x=j*w;
-				          int y=i*h;
 				          if(mazeData[i][j]==1){
 				        	  e.gc.drawImage(_wallImg, 0, 0, _wallImg.getBounds().width, _wallImg.getBounds().height, 
 					    				w * j, h * i, w, h);
@@ -150,6 +168,11 @@ public class MazeDisplay extends Canvas {
 					      		e.gc.drawImage(_upImg, 0, 0, _upImg.getBounds().width, _upImg.getBounds().height, 
 					    				w * j, h * i, w, h);				        	
 				          }
+				          if(mazeData[i][j]==3){
+				        	  e.gc.drawImage(_clueImg, 0, 0, _clueImg.getBounds().width, _clueImg.getBounds().height, 
+					    				w * j, h * i, w, h);
+				          }
+
 				          e.gc.setForeground(new Color(null,0,0,0));
 						  e.gc.setBackground(new Color(null,0,0,0));
 				      }
@@ -164,6 +187,10 @@ public class MazeDisplay extends Canvas {
 	}
 	
 
+	/**
+	 * Draw and display the solution of the maze while moving the character
+	 * @param solution
+	 */
 public void printSolution(Solution<Position> solution) {
 
 		TimerTask task = new TimerTask() {
@@ -203,6 +230,10 @@ public void printSolution(Solution<Position> solution) {
 	}
 
 
+/**
+ * Display message on screen
+ * @param msg
+ */
 public void displayMessage(String msg) {
 	view.display.syncExec(new Runnable() {
 		
@@ -216,6 +247,25 @@ public void displayMessage(String msg) {
 				
 		}
 	});			
+}
+
+/**
+ * Draw and display the clue for the user
+ * @param sol
+ */
+public void ClueDisplay(Solution<Position> sol) {
+	if(character.getPos().z != clueLastZ){
+	for(State<Position> s :sol.getStatesList()){
+		if(s.getValue().z == character.getPos().z && !(s.getValue().equals(maze.getGoalPosition())) ){
+			mazeData[s.getValue().y][s.getValue().x] = 3;
+			clueLastZ = character.getPos().z;
+		}
+	}
+	redraw();
+	
+}
+	else
+		displayMessage("Only 1 clue is allowed per floor !");
 }}
 
 

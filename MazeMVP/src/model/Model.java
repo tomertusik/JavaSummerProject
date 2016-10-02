@@ -84,4 +84,11 @@ public interface Model {
 	 * @return
 	 */
 	public Properties getProperties();
+	
+	/**
+	 * Solve an existing maze and save the solution but dont anounce it to user
+	 * @param name
+	 * @param maze
+	 */
+	public void SolveClue(String name, Maze3D maze);
 }

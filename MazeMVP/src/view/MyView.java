@@ -111,6 +111,11 @@ public class MyView extends Observable implements View, Observer {
 		displayMessage(msg);
 	    setChanged();
 		notifyObservers("solution_ready " + name);
+	}
+
+	@Override
+	public void ClueMove(Solution<Position> sol) {
+		// No need in here
 	}		
 	}
 

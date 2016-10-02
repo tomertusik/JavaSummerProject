@@ -54,6 +54,7 @@ public class CommandsManager {
 		commands.put("change_properties", new ChangePropertiesCommand());
 		commands.put("change_properties_notify_command", new ChangePropertiesNotifyCommand());
 		commands.put("display_properties", new DisplayPropertiesCommand());
+		commands.put("clue", new ClueCommand());
 		
 		
 		return commands;
@@ -399,7 +400,7 @@ public class CommandsManager {
 	
 	/**
 	 * Display the properties on screen
-	 * @author Tomer
+	 * @author Tomer, Gilad
 	 *
 	 */
 	class DisplayPropertiesCommand implements Command {
@@ -413,6 +414,34 @@ public class CommandsManager {
 		view.displayMessage("Solve Maze Algorithm: "+p.getSolveMazeAlgorithm());
 		}
 	
+	}
+	
+	/**
+	 * Display a clue to the user
+	 * @author Tomer, Gilad
+	 *
+	 */
+	public class ClueCommand implements Command{
+
+		@Override
+		public void doCommand(String[] args) throws Exception {
+			if(args.length!=1){
+				throw new  Exception("Invalid name or algorithm");
+			}
+			String name = args[0];
+			Maze3D maze = model.getMaze(name);
+			if(maze==null){
+				throw new  Exception("Invalid maze name");
+			}
+			try {
+				model.SolveClue(name, maze);
+			} catch (Exception e) {
+				throw new  Exception("Error accured,try again");
+			}
+			Solution<Position> sol =  model.getSolutionsByName(name);
+			view.ClueMove(sol);
+		}
+		
 	}
 
 }

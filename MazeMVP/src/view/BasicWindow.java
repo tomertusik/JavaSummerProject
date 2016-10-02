@@ -2,10 +2,15 @@ package view;
 
 import java.util.Observable;
 
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+
+/**
+ * Basic view window that runs the program on screen
+ * @author Tomer, Gilad
+ *
+ */
 public abstract class BasicWindow extends Observable implements Runnable {
 
 	protected Display display;

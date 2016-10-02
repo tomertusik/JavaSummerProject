@@ -68,4 +68,10 @@ public interface View {
 	 * @param name
 	 */
 	public void solutionExist(String name);
+
+	/**
+	 * Gives the user a clue
+	 * @param sol 
+	 */
+	public void ClueMove(Solution<Position> sol);
 }

@@ -5,13 +5,18 @@ import org.eclipse.swt.graphics.Image;
 
 import algorithms.mazeGenerators.Position;
 
+/**
+ * Represents the character of the game
+ * @author Tomer, Gilad
+ *
+ */
 public class Character {
 	
-	private Position pos;
-	private Image img;
+	private Position pos; // position of the character
+	private Image img; // image of the character
 	
-	public Character() {
-		img = new Image(null, "images/ironman.png");
+	public Character(Image img) {
+		this.img = img;
 	}
 
 	public Position getPos() {
@@ -21,8 +26,13 @@ public class Character {
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
-	
-	// draw the character
+
+	/**
+	 * Draws the character in the maze
+	 * @param cellWidth
+	 * @param cellHeight
+	 * @param gc
+	 */
 	public void draw(int cellWidth, int cellHeight, GC gc) {
 		gc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, 
 				cellWidth * pos.x, cellHeight * pos.y, cellWidth, cellHeight);
