@@ -256,7 +256,7 @@ public void displayMessage(String msg) {
 public void ClueDisplay(Solution<Position> sol) {
 	if(character.getPos().z != clueLastZ){
 	for(State<Position> s :sol.getStatesList()){
-		if(s.getValue().z == character.getPos().z && !(s.getValue().equals(maze.getGoalPosition())) ){
+		if(s.getValue().z == character.getPos().z && !(s.getValue().equals(maze.getGoalPosition())) && !(s.getValue().equals(character.getPos())) ){
 			mazeData[s.getValue().y][s.getValue().x] = 3;
 			clueLastZ = character.getPos().z;
 		}

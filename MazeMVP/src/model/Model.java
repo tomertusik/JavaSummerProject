@@ -91,4 +91,10 @@ public interface Model {
 	 * @param maze
 	 */
 	public void SolveClue(String name, Maze3D maze);
+	
+	/**
+	 * Set the properties of the program
+	 * @param properties
+	 */
+	void setProperties(Properties properties);
 }

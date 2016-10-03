@@ -4,6 +4,7 @@ import java.beans.XMLDecoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+
 /**
  * Load the properties from the xml file "properties" at the start of the program
  * @author Tomer, Gilad
@@ -24,7 +25,7 @@ public class PropertiesLoader {
 	/**
 	 * CTOR
 	 */
-	private PropertiesLoader() 
+	public PropertiesLoader() 
 	{
 		try {
 			XMLDecoder decoder = new XMLDecoder(new FileInputStream("properties.xml"));
@@ -43,6 +44,20 @@ public class PropertiesLoader {
 		if (instance == null) 
 			instance = new PropertiesLoader();
 		return instance;
+	}
+
+	/**
+	 * Sets the properties from file
+	 * @param file
+	 */
+	public void setProperties(String file) {
+		try {
+			XMLDecoder decoder = new XMLDecoder(new FileInputStream(file));
+			properties = (Properties) decoder.readObject();
+			decoder.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

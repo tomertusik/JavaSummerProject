@@ -33,6 +33,7 @@ import algorithms.search.Searcher;
 import algorithms.search.Solution;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
+import presenter.Properties;
 import presenter.PropertiesLoader;
 /**
  * Model fo the 3D maze game
@@ -331,7 +332,13 @@ public class MyModel extends Observable implements Model {
 					return sol;
 				}
 			});
-			}		
+			}
+
+	
+	@Override
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}		
 	}
 	
 	

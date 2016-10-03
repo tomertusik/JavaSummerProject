@@ -55,7 +55,7 @@ public class CommandsManager {
 		commands.put("change_properties_notify_command", new ChangePropertiesNotifyCommand());
 		commands.put("display_properties", new DisplayPropertiesCommand());
 		commands.put("clue", new ClueCommand());
-		
+		commands.put("switch_xml", new SwitchXMLCommand());		
 		
 		return commands;
 	}
@@ -440,6 +440,27 @@ public class CommandsManager {
 			}
 			Solution<Position> sol =  model.getSolutionsByName(name);
 			view.ClueMove(sol);
+		}
+		
+	}
+	
+	
+	/**
+	 * Replace the XML with a new XML file
+	 * @author Tomer
+	 *
+	 */
+	public class SwitchXMLCommand implements Command{
+
+		@Override
+		public void doCommand(String[] args) throws Exception {
+			if (args.length != 1) {
+				throw new Exception("Invalid arguments");
+			}
+			String file = args[0];
+			PropertiesLoader xmLoader = new PropertiesLoader();
+			xmLoader.setProperties(file);
+			model.setProperties(xmLoader.getProperties());
 		}
 		
 	}

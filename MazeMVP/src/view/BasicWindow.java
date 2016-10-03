@@ -2,6 +2,9 @@ package view;
 
 import java.util.Observable;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -27,7 +30,9 @@ public abstract class BasicWindow extends Observable implements Runnable {
 		initWidgets();
 		
 		shell.open();
-		
+				
+		zoom();
+
 		// main event loop
 		while(!shell.isDisposed()){ // while window isn't closed
 		
@@ -42,4 +47,8 @@ public abstract class BasicWindow extends Observable implements Runnable {
 		display.dispose(); // dispose OS components
 	}
 
+	/**
+	 * Zoom in and out with the mouse wheel
+	 */
+	protected abstract void zoom();
 }
