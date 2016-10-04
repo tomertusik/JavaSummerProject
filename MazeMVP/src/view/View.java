@@ -73,5 +73,12 @@ public interface View {
 	 * Gives the user a clue
 	 * @param sol 
 	 */
-	public void ClueMove(Solution<Position> sol);
+	public void ClueMove();
+
+	/**
+	 * Load a maze from file and display it on screen
+	 * @param name
+	 * @param maze 
+	 */
+	public void MazeLoaded(String name);
 }

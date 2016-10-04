@@ -192,10 +192,10 @@ public class CommandsManager {
 			String fileName = args[0];
 			
 			String name = args[1];
-			Maze3D maze = model.getMaze(name);
-			if(maze!=null){
-				throw new  Exception("Invalid maze already exsist");
-			}
+//			Maze3D maze = model.getMaze(name);
+//			if(maze!=null){
+//				throw new  Exception("Invalid maze already exsist");
+//			}
 			
 			try {
 				model.LoadMaze(fileName,name);
@@ -323,9 +323,8 @@ public class CommandsManager {
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];
-			String msg = "maze " + name + " is loaded from file";
-		view.displayMessage(msg);
-		}
+			view.MazeLoaded(name);
+			}
 		
 	}
 	
@@ -433,13 +432,7 @@ public class CommandsManager {
 			if(maze==null){
 				throw new  Exception("Invalid maze name");
 			}
-			try {
-				model.SolveClue(name, maze);
-			} catch (Exception e) {
-				throw new  Exception("Error accured,try again");
-			}
-			Solution<Position> sol =  model.getSolutionsByName(name);
-			view.ClueMove(sol);
+			view.ClueMove();
 		}
 		
 	}

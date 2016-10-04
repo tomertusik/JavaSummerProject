@@ -15,14 +15,26 @@ public class Character {
 	private Position pos; // position of the character
 	private Image img; // image of the character
 	
+	/**
+	 * CTOR
+	 * @param img
+	 */
 	public Character(Image img) {
 		this.img = img;
 	}
 
+	/**
+	 * returns the character position
+	 * @return
+	 */
 	public Position getPos() {
 		return pos;
 	}
 
+	/**
+	 * sets the character position
+	 * @param pos
+	 */
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
@@ -38,6 +50,10 @@ public class Character {
 				cellWidth * pos.x, cellHeight * pos.y, cellWidth, cellHeight);
 	}
 	
+	/**
+	 * Moves the character on screen
+	 * @param _myDer
+	 */
 	public void move(String _myDer) {
 		switch (_myDer) {
 		case "Up":	

@@ -114,8 +114,14 @@ public class MyView extends Observable implements View, Observer {
 	}
 
 	@Override
-	public void ClueMove(Solution<Position> sol) {
+	public void ClueMove() {
 		// No need in here
+	}
+
+	@Override
+	public void MazeLoaded(String name) {
+		String msg = "maze " + name + " is loaded from file";
+		displayMessage(msg);
 	}		
 	}
 

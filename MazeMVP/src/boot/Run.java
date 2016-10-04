@@ -23,9 +23,11 @@ public class Run {
 				
 		Model model = new MyModel();
 		
+		// Game view with GUI
 		if(model.getProperties().getViewType().equals("Game")){
 			view = new MazeWindow();
 		}
+		// Commnands view
 		else if(model.getProperties().getViewType().equals("Commands")){
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			PrintWriter out = new PrintWriter(System.out);

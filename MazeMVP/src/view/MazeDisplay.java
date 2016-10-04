@@ -137,7 +137,6 @@ public class MazeDisplay extends Canvas {
 				   Image _twowayImg=new Image(null, "images/twoway.png");
 				   Image _downImg=new Image(null, "images/down.png");
 				   Image _upImg=new Image(null, "images/up.png");
-				   Image _clueImg=new Image(null, "images/clue.png");
 				   
 				   for(int i=0;i<mazeData.length;i++)
 				      for(int j=0;j<mazeData[i].length;j++){
@@ -168,11 +167,7 @@ public class MazeDisplay extends Canvas {
 					      		e.gc.drawImage(_upImg, 0, 0, _upImg.getBounds().width, _upImg.getBounds().height, 
 					    				w * j, h * i, w, h);				        	
 				          }
-				          if(mazeData[i][j]==3){
-				        	  e.gc.drawImage(_clueImg, 0, 0, _clueImg.getBounds().width, _clueImg.getBounds().height, 
-					    				w * j, h * i, w, h);
-				          }
-
+				    
 				          e.gc.setForeground(new Color(null,0,0,0));
 						  e.gc.setBackground(new Color(null,0,0,0));
 				      }
@@ -253,19 +248,13 @@ public void displayMessage(String msg) {
  * Draw and display the clue for the user
  * @param sol
  */
-public void ClueDisplay(Solution<Position> sol) {
-	if(character.getPos().z != clueLastZ){
-	for(State<Position> s :sol.getStatesList()){
-		if(s.getValue().z == character.getPos().z && !(s.getValue().equals(maze.getGoalPosition())) && !(s.getValue().equals(character.getPos())) ){
-			mazeData[s.getValue().y][s.getValue().x] = 3;
-			clueLastZ = character.getPos().z;
-		}
-	}
-	redraw();
-	
-}
+public void ClueDisplay() {
+	if(character.getPos().z > maze.getGoalPosition().z)
+		displayMessage("The exit is below you! move to a lower floor");
+	else if(character.getPos().z < maze.getGoalPosition().z)
+		displayMessage("The exit is above you! move to an higher floor");
 	else
-		displayMessage("Only 1 clue is allowed per floor !");
+		displayMessage("The exit is on this floor! find it");
 }}
 
 

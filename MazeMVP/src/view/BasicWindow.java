@@ -19,7 +19,9 @@ public abstract class BasicWindow extends Observable implements Runnable {
 	protected Display display;
 	protected Shell shell;
 	
-	
+	/**
+	 * Add all the screen displays and buttons and a game board
+	 */
 	protected abstract void initWidgets();
 	
 	@Override

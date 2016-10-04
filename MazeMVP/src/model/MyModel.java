@@ -308,32 +308,6 @@ public class MyModel extends Observable implements Model {
 	public presenter.Properties getProperties() {
 		return properties;
 	}
-
-	@Override
-	public void SolveClue(String name, Maze3D maze) {
-		
-			executor.submit(new Callable<Solution<Position>>() {
-
-				@Override
-				public Solution<Position> call() throws Exception {
-					SearchAdapter sa = new SearchAdapter(maze);
-					Solution<Position> sol=null;
-					Searcher<Position> searchy = null;
-					
-					if(properties.getSolveMazeAlgorithm().equals("BFS")){
-						 searchy = new BFSsearch<Position>(); // create BFS searcher
-					}
-					else if(properties.getSolveMazeAlgorithm().equals("DFS")){
-						 searchy = new DFSsearch<Position>();// create DFS searcher
-					}
-					
-					sol = searchy.Search(sa); // run the search method to get a solution
-					solutions.put(maze, sol);	
-					return sol;
-				}
-			});
-			}
-
 	
 	@Override
 	public void setProperties(Properties properties) {

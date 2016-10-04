@@ -1,6 +1,7 @@
 package view;
 
 import java.io.File;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseWheelListener;
@@ -13,8 +14,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -82,7 +85,8 @@ public class MazeWindow extends BasicWindow implements View {
 	}
 
 	@Override
-	public void exit() {		
+	public void exit() {	
+		shell.dispose();
 	}
 
 	@Override
@@ -91,7 +95,7 @@ public class MazeWindow extends BasicWindow implements View {
 		// Set the shell graphics and buttons group
 		shell.setLayout(new GridLayout(1, false));	
 		shell.setText("Avengers Maze Game");
-		shell.setSize(800,500);
+		shell.setMaximized(true);
 		shell.setBackground(new Color(null, 0, 51, 102));
 		shell.setImage(new Image(null, "images/goal.png"));
 		Composite btnGroup = new Composite(shell, SWT.BORDER);
@@ -106,190 +110,7 @@ public class MazeWindow extends BasicWindow implements View {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				//set the generate button graphics and set the characters selection
-				Shell shell = new Shell();
-				shell.setText("Character Screen");
-				shell.setSize(600, 600);
-				shell.setLayout(new GridLayout(1,false));
-				Label lblName = new Label(shell, SWT.NONE);
-				lblName.setText("Please choose your character ");
-				Composite btnGroup = new Composite(shell, SWT.BORDER);
-				btnGroup.setLayout( new GridLayout(3,false));
-				btnGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				
-				//iron man butto
-				Button ironMan = new Button(btnGroup, SWT.PUSH);
-				ironMan.setImage(new Image(null, "images/ironman.png"));
-				ironMan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				ironMan.setText("Iron Man");
-				ironMan.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = ironMan.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {						
-					}
-				});
-				
-				// hulk button
-				Button hulk = new Button(btnGroup, SWT.PUSH);
-				hulk.setImage(new Image(null, "images/hulk.png"));
-				hulk.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				hulk.setText("The Hulk");
-				hulk.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = hulk.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
-					}
-				});
-				
-				// black widow button
-				Button widow = new Button(btnGroup, SWT.PUSH);
-				widow.setImage(new Image(null, "images/widow.png"));
-				widow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				widow.setText("Black Widow");
-				widow.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = widow.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
-					}
-				});
-				
-				// spider man button
-				Button spider = new Button(btnGroup, SWT.PUSH);
-				spider.setImage(new Image(null, "images/spiderman.png"));
-				spider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				spider.setText("Spider Man");
-				spider.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = spider.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
-					}
-				});
-				
-				// captain america button
-				Button captain = new Button(btnGroup, SWT.PUSH);
-				captain.setImage(new Image(null, "images/captain.png"));
-				captain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				captain.setText("Captain America");
-				captain.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = captain.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
-					}
-				});
-				
-				// ant man button
-				Button antman = new Button(btnGroup, SWT.PUSH);
-				antman.setImage(new Image(null, "images/antman.png"));
-				antman.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				antman.setText("Ant Man");
-				antman.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = antman.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
-					}
-				});
-				
-				// hawk eye button
-				Button hawkeye = new Button(btnGroup, SWT.PUSH);
-				hawkeye.setImage(new Image(null, "images/hawkeye.png"));
-				hawkeye.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				hawkeye.setText("Hawk Eye");
-				hawkeye.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = hawkeye.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
-					}
-				});
-				
-				// nick fury button
-				Button nickfury = new Button(btnGroup, SWT.PUSH);
-				nickfury.setImage(new Image(null, "images/nickfury.png"));
-				nickfury.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				nickfury.setText("Nick Fury");
-				nickfury.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = nickfury.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
-					}
-				});
-				
-				// thor button
-				Button thor = new Button(btnGroup, SWT.PUSH);
-				thor.setImage(new Image(null, "images/thor.png"));
-				thor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				thor.setText("Thor");
-				thor.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent arg0) {
-						characterImg = thor.getImage();
-						showGenerateMazeOptions();
-						shell.close();
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
-					}
-				});
-				
-				shell.open();
-				
+				CharacterSelection(null);
 			}
 			
 			@Override
@@ -315,7 +136,6 @@ public class MazeWindow extends BasicWindow implements View {
 		// clue button
 		Button btnClue = new Button(btnGroup, SWT.PUSH);
 		btnClue.setText("Clue");
-		setChanged();
 		btnClue.addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -522,65 +342,343 @@ public class MazeWindow extends BasicWindow implements View {
 			}
 		});
 		
-		// display the game graphics
-		_mazeDisplay = new MazeDisplay(shell,SWT.DOUBLE_BUFFERED,null,this,null);
-		_mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	}
-
-	/**
-	 * Shows the user the options for generating maze
-	 */
-	protected void showGenerateMazeOptions(){
-		Shell shell = new Shell();
-		shell.setText("Generate Maze");
-		shell.setSize(300, 150);
-		
-		shell.setLayout(new GridLayout(4, false));
-		
-		Label lblName = new Label(shell, SWT.NONE);
-		lblName.setText("Maze Name: ");
-		lblName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		Text txtName = new Text(shell, SWT.BORDER);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		Label lblFloors = new Label(shell, SWT.NONE);
-		lblFloors.setText("Floors: ");
-		Text txtFloors = new Text(shell, SWT.BORDER);
-		lblFloors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		txtFloors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		Label lblRows = new Label(shell, SWT.NONE);
-		lblRows.setText("Rows: ");
-		Text txtRows = new Text(shell, SWT.BORDER);
-		lblRows.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		txtRows.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		Label lblCols = new Label(shell, SWT.NONE);
-		lblCols.setText("Cols: ");
-		Text txtCols = new Text(shell, SWT.BORDER);
-		lblCols.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		txtCols.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		Button btnGenerate = new Button(shell, SWT.PUSH);
-		btnGenerate.setText("Generate");
-		btnGenerate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		btnGenerate.addSelectionListener(new SelectionListener() {
+		//exit the game safely
+		Button exitBtn = new Button(btnGroup, SWT.PUSH);
+		exitBtn.setText("Exit");
+		exitBtn.addSelectionListener(new SelectionListener() {
 			
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				mazeName = txtName.getText();
-				setChanged();
-				notifyObservers("generate_maze " + txtName.getText() + " " + txtFloors.getText() + "," + txtRows.getText() + "," + txtCols.getText());
-				shell.close();
+			public void widgetSelected(SelectionEvent arg0) {	
+				ExitAll();
 			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {				
 			}
-		});	
-	
+		});
 		
-		shell.open();		
+		shell.addListener(SWT.Close, new Listener() {
+			
+			@Override
+			public void handleEvent(Event arg0) {
+				ExitAll();
+				arg0.doit=false;
+			}
+		});
+		
+		//save a maze to file
+		Button saveMaze = new Button(btnGroup, SWT.PUSH);
+		saveMaze.setText("Save Maze");
+		saveMaze.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {	
+				setChanged();
+				notifyObservers("save_maze " + mazeName + " " + mazeName);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {				
+			}
+		});
+		
+		//load maze from file
+		Button loadMaze = new Button(btnGroup, SWT.PUSH);
+		loadMaze.setText("Load Maze");
+		loadMaze.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Shell loadShell = new Shell();
+				loadShell.setText("Load Maze");
+				loadShell.setSize(150, 150);
+				loadShell.setLayout(new GridLayout(1, false));
+				Label lblName = new Label(loadShell, SWT.NONE);
+				lblName.setText("Maze Name: ");
+				lblName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				Text txtName = new Text(loadShell, SWT.BORDER);
+				txtName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				Button load = new Button(loadShell, SWT.PUSH);
+				load.setText("Load");
+				load.addSelectionListener(new SelectionListener() {
+					
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {	
+						setChanged();
+						notifyObservers("load_maze " + txtName.getText() + " " + txtName.getText());
+						loadShell.close();
+					}
+					
+					@Override
+					public void widgetDefaultSelected(SelectionEvent arg0) {						
+					}
+				});
+				loadShell.open();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {				
+			}
+		});
+		
+		// display the game graphics
+		_mazeDisplay = new MazeDisplay(shell,SWT.DOUBLE_BUFFERED,null,this,null);
+		_mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	}
+
+	
+	/**
+	 * Allow the user to choose character
+	 * @param object
+	 */
+	protected void CharacterSelection(String name) {
+		//set the generate button graphics and set the characters selection
+		Shell shell = new Shell();
+		shell.setText("Character Screen");
+		shell.setSize(600, 600);
+		shell.setLayout(new GridLayout(1,false));
+		Label lblName = new Label(shell, SWT.NONE);
+		lblName.setText("Please choose your character ");
+		Composite btnGroup = new Composite(shell, SWT.BORDER);
+		btnGroup.setLayout( new GridLayout(3,false));
+		btnGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		//iron man button
+		Button ironMan = new Button(btnGroup, SWT.PUSH);
+		ironMan.setImage(new Image(null, "images/ironman.png"));
+		ironMan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		ironMan.setText("Iron Man");
+		ironMan.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = ironMan.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {						
+			}
+		});
+		
+		// hulk button
+		Button hulk = new Button(btnGroup, SWT.PUSH);
+		hulk.setImage(new Image(null, "images/hulk.png"));
+		hulk.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		hulk.setText("The Hulk");
+		hulk.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = hulk.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		// black widow button
+		Button widow = new Button(btnGroup, SWT.PUSH);
+		widow.setImage(new Image(null, "images/widow.png"));
+		widow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		widow.setText("Black Widow");
+		widow.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = widow.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		// spider man button
+		Button spider = new Button(btnGroup, SWT.PUSH);
+		spider.setImage(new Image(null, "images/spiderman.png"));
+		spider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		spider.setText("Spider Man");
+		spider.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = spider.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		// captain america button
+		Button captain = new Button(btnGroup, SWT.PUSH);
+		captain.setImage(new Image(null, "images/captain.png"));
+		captain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		captain.setText("Captain America");
+		captain.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = captain.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		// ant man button
+		Button antman = new Button(btnGroup, SWT.PUSH);
+		antman.setImage(new Image(null, "images/antman.png"));
+		antman.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		antman.setText("Ant Man");
+		antman.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = antman.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		// hawk eye button
+		Button hawkeye = new Button(btnGroup, SWT.PUSH);
+		hawkeye.setImage(new Image(null, "images/hawkeye.png"));
+		hawkeye.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		hawkeye.setText("Hawk Eye");
+		hawkeye.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = hawkeye.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		// nick fury button
+		Button nickfury = new Button(btnGroup, SWT.PUSH);
+		nickfury.setImage(new Image(null, "images/nickfury.png"));
+		nickfury.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		nickfury.setText("Nick Fury");
+		nickfury.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = nickfury.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		// thor button
+		Button thor = new Button(btnGroup, SWT.PUSH);
+		thor.setImage(new Image(null, "images/thor.png"));
+		thor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		thor.setText("Thor");
+		thor.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				characterImg = thor.getImage();
+				showGenerateMazeOptions(name);
+				shell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		shell.open();
+		
+	}
+
+	
+	/**
+	 * Shows the user the options for generating maze
+	 * @param name 
+	 */
+	protected void showGenerateMazeOptions(String name){
+		if(name == null){
+			Shell shell = new Shell();
+			shell.setText("Generate Maze");
+			shell.setSize(300, 150);
+			
+			shell.setLayout(new GridLayout(4, false));
+			
+			Label lblName = new Label(shell, SWT.NONE);
+			lblName.setText("Maze Name: ");
+			lblName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			Text txtName = new Text(shell, SWT.BORDER);
+			txtName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			
+			Label lblFloors = new Label(shell, SWT.NONE);
+			lblFloors.setText("Floors: ");
+			Text txtFloors = new Text(shell, SWT.BORDER);
+			lblFloors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			txtFloors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			
+			Label lblRows = new Label(shell, SWT.NONE);
+			lblRows.setText("Rows: ");
+			Text txtRows = new Text(shell, SWT.BORDER);
+			lblRows.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			txtRows.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			
+			Label lblCols = new Label(shell, SWT.NONE);
+			lblCols.setText("Cols: ");
+			Text txtCols = new Text(shell, SWT.BORDER);
+			lblCols.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			txtCols.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			
+			Button btnGenerate = new Button(shell, SWT.PUSH);
+			btnGenerate.setText("Generate");
+			btnGenerate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			btnGenerate.addSelectionListener(new SelectionListener() {
+				
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {
+					mazeName = txtName.getText();
+					setChanged();
+					notifyObservers("generate_maze " + txtName.getText() + " " + txtFloors.getText() + "," + txtRows.getText() + "," + txtCols.getText());
+					shell.close();
+				}
+				
+				@Override
+				public void widgetDefaultSelected(SelectionEvent arg0) {				
+				}
+			});	
+		
+			
+			shell.open();		
+		}
+		else{
+			mazeReady(name);	
+		}
 	}
 
 	@Override
@@ -591,13 +689,12 @@ public class MazeWindow extends BasicWindow implements View {
 			public void run() {
 				setChanged();
 				notifyObservers("display " + name);
-				
 				_mazeDisplay.setVisible(true);
 				_mazeDisplay.redraw();
 				shell.setVisible(true);
 				shell.redraw();
-				shell.setSize(799,500);
-				shell.setSize(800, 500);
+				shell.setMaximized(false);
+				shell.setMaximized(true);
 				}
 		});			
 	}
@@ -624,10 +721,7 @@ public class MazeWindow extends BasicWindow implements View {
 		return mazeName;
 	}
 
-	@Override
-	public void ClueMove(Solution<Position> sol) {
-		_mazeDisplay.ClueDisplay(sol);
-	}
+	
 
 	@Override
 	protected void zoom() {
@@ -638,7 +732,10 @@ public class MazeWindow extends BasicWindow implements View {
 			public void mouseScrolled(MouseEvent e) {
 				int wheelNumber = e.count;
 				if ((e.stateMask & SWT.CONTROL) == SWT.CONTROL) {
-					if ((wheelNumber < 0 && shell.getSize().x > 200 && shell.getSize().y > 200) || (wheelNumber > 0 && shell.getSize().x < 2000 && shell.getSize().y < 2000)) {
+					if ((wheelNumber < 0 && shell.getSize().x > 200 && shell.getSize().y > 200))  {
+						shell.setSize(shell.getSize().x + wheelNumber, shell.getSize().y + wheelNumber);
+					}
+					else if( (wheelNumber > 0 && shell.getSize().x < 2000 && shell.getSize().y < 2000)) {
 						shell.setSize(shell.getSize().x + wheelNumber, shell.getSize().y + wheelNumber);
 					}
 				}
@@ -646,7 +743,67 @@ public class MazeWindow extends BasicWindow implements View {
 		});
 
 	}
+	
+	/**
+	 * Exit the game safely
+	 */
+	protected void ExitAll(){
+		Shell exitShell = new Shell();
+		exitShell.setText("Exit");
+		exitShell.setLayout(new GridLayout(1,false));
+		exitShell.setSize(300, 115);
+		Label lblName = new Label(exitShell, SWT.NONE);
+		lblName.setText("Are you sure you want to exit the game?");
+		Composite btnGroup = new Composite(exitShell, SWT.BORDER);
+		btnGroup.setLayout( new GridLayout(3,false));
+		btnGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		// Button yes to exit the game
+		Button yes = new Button(btnGroup, SWT.PUSH);
+		yes.setText("Yes");
+		yes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		yes.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setChanged();
+				notifyObservers("exit ");
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {				
+			}
+		});
+		
+		// button no to stay in the game
+		Button no = new Button(btnGroup, SWT.PUSH);
+		no.setText("No");
+		no.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		no.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				exitShell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {	
+			}
+		});
+		
+		exitShell.open();
+	}
 
+	@Override
+	public void MazeLoaded(String name) {
+		mazeName = name;
+		CharacterSelection(name);
+	}
+
+	@Override
+	public void ClueMove() {
+			_mazeDisplay.ClueDisplay();			
+	}
 	
 	
 
