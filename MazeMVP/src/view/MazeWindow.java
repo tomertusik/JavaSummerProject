@@ -97,7 +97,7 @@ public class MazeWindow extends BasicWindow implements View {
 		shell.setText("Avengers Maze Game");
 		shell.setMaximized(true);
 		shell.setBackground(new Color(null, 0, 51, 102));
-		shell.setImage(new Image(null, "images/goal.png"));
+		shell.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("goal.png"))));
 		Composite btnGroup = new Composite(shell, SWT.BORDER);
 		btnGroup.setBackground(new Color(null, 0, 51, 102));
 		btnGroup.setLayout( new RowLayout(SWT.HORIZONTAL));
@@ -445,7 +445,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		//iron man button
 		Button ironMan = new Button(btnGroup, SWT.PUSH);
-		ironMan.setImage(new Image(null, "images/ironman.png"));
+		ironMan.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("ironman.png"))));
 		ironMan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		ironMan.setText("Iron Man");
 		ironMan.addSelectionListener(new SelectionListener() {
@@ -464,7 +464,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		// hulk button
 		Button hulk = new Button(btnGroup, SWT.PUSH);
-		hulk.setImage(new Image(null, "images/hulk.png"));
+		hulk.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("hulk.png"))));
 		hulk.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		hulk.setText("The Hulk");
 		hulk.addSelectionListener(new SelectionListener() {
@@ -483,7 +483,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		// black widow button
 		Button widow = new Button(btnGroup, SWT.PUSH);
-		widow.setImage(new Image(null, "images/widow.png"));
+		widow.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("widow.png"))));
 		widow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		widow.setText("Black Widow");
 		widow.addSelectionListener(new SelectionListener() {
@@ -502,7 +502,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		// spider man button
 		Button spider = new Button(btnGroup, SWT.PUSH);
-		spider.setImage(new Image(null, "images/spiderman.png"));
+		spider.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("spiderman.png"))));
 		spider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		spider.setText("Spider Man");
 		spider.addSelectionListener(new SelectionListener() {
@@ -521,7 +521,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		// captain america button
 		Button captain = new Button(btnGroup, SWT.PUSH);
-		captain.setImage(new Image(null, "images/captain.png"));
+		captain.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("captain.png"))));
 		captain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		captain.setText("Captain America");
 		captain.addSelectionListener(new SelectionListener() {
@@ -540,7 +540,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		// ant man button
 		Button antman = new Button(btnGroup, SWT.PUSH);
-		antman.setImage(new Image(null, "images/antman.png"));
+		antman.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("antman.png"))));
 		antman.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		antman.setText("Ant Man");
 		antman.addSelectionListener(new SelectionListener() {
@@ -559,7 +559,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		// hawk eye button
 		Button hawkeye = new Button(btnGroup, SWT.PUSH);
-		hawkeye.setImage(new Image(null, "images/hawkeye.png"));
+		hawkeye.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("hawkeye.png"))));
 		hawkeye.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		hawkeye.setText("Hawk Eye");
 		hawkeye.addSelectionListener(new SelectionListener() {
@@ -578,7 +578,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		// nick fury button
 		Button nickfury = new Button(btnGroup, SWT.PUSH);
-		nickfury.setImage(new Image(null, "images/nickfury.png"));
+		nickfury.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("nickfury.png"))));
 		nickfury.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		nickfury.setText("Nick Fury");
 		nickfury.addSelectionListener(new SelectionListener() {
@@ -597,7 +597,7 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		// thor button
 		Button thor = new Button(btnGroup, SWT.PUSH);
-		thor.setImage(new Image(null, "images/thor.png"));
+		thor.setImage(new Image(null, (getClass().getClassLoader().getResourceAsStream("thor.png"))));
 		thor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		thor.setText("Thor");
 		thor.addSelectionListener(new SelectionListener() {

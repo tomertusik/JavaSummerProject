@@ -117,7 +117,7 @@ public class MazeDisplay extends Canvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 				if (mazeData == null){
-						Image imgBack = new Image(null, "images/avengerscover.jpeg");
+						Image imgBack = new Image(null, (getClass().getClassLoader().getResourceAsStream("avengerscover.jpeg")));
 						e.gc.drawImage(imgBack, 0, 0, imgBack.getBounds().width, imgBack.getBounds().height, 0, 0,
 								getSize().x, getSize().y);
 						return;
@@ -132,11 +132,11 @@ public class MazeDisplay extends Canvas {
 				   int w=width/mazeData[0].length;
 				   int h=height/mazeData.length;
 				   
-				   Image _wallImg = new Image(null, "images/wall.jpg");
-				   Image _bananaImg=new Image(null, "images/goal.png");
-				   Image _twowayImg=new Image(null, "images/twoway.png");
-				   Image _downImg=new Image(null, "images/down.png");
-				   Image _upImg=new Image(null, "images/up.png");
+				   Image _wallImg = new Image(null, (getClass().getClassLoader().getResourceAsStream("wall.jpg")));
+				   Image _bananaImg=new Image(null, (getClass().getClassLoader().getResourceAsStream("goal.png")));
+				   Image _twowayImg=new Image(null, (getClass().getClassLoader().getResourceAsStream("twoway.png")));
+				   Image _downImg=new Image(null, (getClass().getClassLoader().getResourceAsStream("down.png")));
+				   Image _upImg=new Image(null, (getClass().getClassLoader().getResourceAsStream("up.png")));
 				   
 				   for(int i=0;i<mazeData.length;i++)
 				      for(int j=0;j<mazeData[i].length;j++){

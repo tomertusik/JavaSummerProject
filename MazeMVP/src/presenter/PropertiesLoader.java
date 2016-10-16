@@ -27,13 +27,9 @@ public class PropertiesLoader {
 	 */
 	public PropertiesLoader() 
 	{
-		try {
-			XMLDecoder decoder = new XMLDecoder(new FileInputStream("properties.xml"));
-			properties = (Properties)decoder.readObject();
-			decoder.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		XMLDecoder decoder = new XMLDecoder(getClass().getClassLoader().getResourceAsStream("properties.xml"));
+		properties = (Properties)decoder.readObject();
+		decoder.close();
 	}
 	
 	/**
